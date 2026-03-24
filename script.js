@@ -10,6 +10,17 @@ if (window.myAndroidTarget) {
     };
 }
 
+// Listen for messages sent from the Android app via postWebMessage
+window.addEventListener('message', function(event) {
+    console.log(event);
+
+    console.log("Message received from Android native:", event.data);
+    
+    // Update the UI to show the message
+    const statusText = document.getElementById('status');
+    statusText.innerText = "Native App says: " + event.data;
+});
+
 // 2. Send messages TO Android
 sendBtn.addEventListener('click', () => {
     const msg = messageInput.value;
