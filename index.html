@@ -1,21 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Android WebMessage Test</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Android WebMessage Test</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <h1>WebView Test Page</h1>
+        <p id="status">Status: Waiting for Android...</p>
 
-    <h1>WebView Test Page</h1>
-    <p id="status">Status: Waiting for Android...</p>
+        <div class="card">
+            <input type="text" id="messageInput" placeholder="Type a message to Android..." />
+            <button id="sendBtn">Send to App</button>
+        </div>
 
-    <div class="card">
-        <input type="text" id="messageInput" placeholder="Type a message to Android...">
-        <button id="sendBtn">Send to App</button>
-    </div>
+        <div class="card">
+            <h3>Storage Limit Test</h3>
+            <input type="number" id="sizeInput" placeholder="Size in MB" value="1" />
+            <button id="downloadBtn" style="background-color: #007bff">Fill Storage</button>
+            <p id="storageStatus">Current Usage: Unknown</p>
+        </div>
 
-    <script src="script.js"></script>
-</body>
+        <script src="script.js"></script>
+    </body>
 </html>
