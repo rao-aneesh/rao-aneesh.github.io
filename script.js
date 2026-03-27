@@ -33,3 +33,30 @@ sendBtn.addEventListener('click', () => {
         console.error("WebMessageListener object not injected.");
     }
 });
+
+const downloadBtn = document.getElementById('downloadBtn');
+const sizeInput = document.getElementById('sizeInput');
+const storageStatus = document.getElementById('storageStatus');
+
+downloadBtn.addEventListener('click', async () => {
+    const sizeInMB = parseFloat(sizeInput.value);
+    if (isNaN(sizeInMB) || sizeInMB <= 0) return alert("Enter a valid size");
+
+    storageStatus.innerText = `Generating ${sizeInMB}MB of data...`;
+
+    // Create a large string (1 char = ~2 bytes in UTF-16, so we adjust)
+    const dataSize = sizeInMB * 1024 * 1024;
+    const dummyData = "x".repeat(dataSize);
+
+    try {
+        // Using the Cache API to store the "download"
+        const cache = await caches.open('webview-size-test');
+        const response = new Response(dummyData);
+        await cache.put(`/test-data-${Date.now()}`, response);
+        
+        storageStatus.innerText = `Success: Added ${sizeInMB}MB to cache.`;
+    } catch (e) {
+        storageStatus.innerText = `Error: ${e.message}`;
+        console.error("Storage failed:", e);
+    }
+});
