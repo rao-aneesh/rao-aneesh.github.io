@@ -5,45 +5,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Android WebMessage Test</title>
         <link rel="stylesheet" href="style.css" />
-        <style>
-            /* Basic styling since style.css wasn't provided */
-            body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
-            .card { 
-                border: 1px solid #ddd; 
-                padding: 15px; 
-                margin-bottom: 20px; 
-                border-radius: 8px; 
-                box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-            }
-            button { padding: 10px 15px; cursor: pointer; color: white; border: none; border-radius: 4px; }
-            #sendBtn { background-color: #28a745; }
-            #downloadBtn { background-color: #007bff; }
-            #redirectBtn { background-color: #6f42c1; }
-            input { padding: 8px; margin-right: 5px; }
-        </style>
     </head>
     <body>
         <h1>WebView Test Page</h1>
         <p id="status">Status: Waiting for Android...</p>
 
+        <!-- Your Original Message Card -->
         <div class="card">
-            <h3>App Communication</h3>
             <input type="text" id="messageInput" placeholder="Type a message to Android..." />
             <button id="sendBtn">Send to App</button>
         </div>
 
+        <!-- Your Original Storage Card -->
         <div class="card">
             <h3>Storage Limit Test</h3>
             <input type="number" id="sizeInput" placeholder="Size in MB" value="1" />
-            <button id="downloadBtn">Fill Storage</button>
+            <button id="downloadBtn" style="background-color: #007bff">Fill Storage</button>
             <p id="storageStatus">Current Usage: Unknown</p>
         </div>
 
-        <!-- New Section for Navigation -->
+        <!-- Integrated Navigation Card -->
         <div class="card">
             <h3>Navigation Test</h3>
-            <p>Click below to trigger a dialog and redirect.</p>
-            <button id="redirectBtn">Go to Random Site</button>
+            <button id="redirectBtn" style="background-color: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">
+                Show Dialog & Redirect
+            </button>
         </div>
 
         <script src="script.js"></script>
