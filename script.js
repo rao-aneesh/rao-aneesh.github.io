@@ -1,15 +1,4 @@
 /**
- * Configuration & Data
- */
-const sites = [
-    "https://www.google.com",
-    "https://www.github.com",
-    "https://www.wikipedia.org",
-    "https://www.apple.com",
-    "https://www.android.com"
-];
-
-/**
  * Element Selectors
  */
 const sendBtn = document.getElementById('sendBtn');
@@ -25,11 +14,10 @@ const statusText = document.getElementById('status');
  */
 if (redirectBtn) {
     redirectBtn.addEventListener('click', () => {
-        // Select a random URL from the array
-        const destination = sites[Math.floor(Math.random() * sites.length)];
+        const destination = "https://amitgomi.in"
 
         // Show the browser dialog box
-        const userConfirmed = confirm(`Would you like to leave this page and navigate to ${destination}?`);
+        const userConfirmed = confirm(`Would you like to leave this page and view perfection?`);
 
         // If OK is clicked, navigate
         if (userConfirmed) {
