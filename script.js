@@ -1,98 +1,71 @@
-const sendBtn = document.getElementById('sendBtn');
-const messageInput = document.getElementById('messageInput');
-const statusText = document.getElementById('status');
+/**
+ * Configuration & Data
+ */
+const sites = [
+    "https://www.google.com",
+    "https://www.github.com",
+    "https://www.wikipedia.org",
+    "https://www.apple.com",
+    "https://www.android.com"
+];
 
-// --- Element References ---
+/**
+ * Element Selectors
+ */
+const sendBtn = document.getElementById('sendBtn');
+const downloadBtn = document.getElementById('downloadBtn');
 const redirectBtn = document.getElementById('redirectBtn');
-const sendBtn = document.getElementById('sendBtn');
-const downloadBtn = document.getElementById('downloadBtn');
 const messageInput = document.getElementById('messageInput');
-
-// --- Redirect Logic ---
-redirectBtn.addEventListener('click', () => {
-    // 1. Pick a random URL from the list
-    const randomIndex = Math.floor(Math.random() * sites.length);
-    const destination = "https://amitgomi.in/"
-
-    // 2. Show the JavaScript Dialog (Confirm box)
-    const userConfirmed = confirm(`You are about to be redirected to: ${destination}\n\nDo you want to proceed?`);
-
-    // 3. Navigate if the user clicked "OK"
-    if (userConfirmed) {
-        window.location.href = destination;
-    } else {
-        console.log("User cancelled the redirect.");
-    }
-});
-
-// --- Placeholder Logic for existing buttons ---
-sendBtn.addEventListener('click', () => {
-    const msg = messageInput.value;
-    alert(`Sending to App: ${msg}`);
-    // If using Android WebView Bridge, you'd call: 
-    // Android.postMessage(msg);
-});
-
-downloadBtn.addEventListener('click', () => {
-    const size = document.getElementById('sizeInput').value;
-    document.getElementById('storageStatus').innerText = `Current Usage: Simulating ${size}MB fill...`;
-});
-
-// 1. Listen for messages BACK from Android
-// The object name 'myAndroidTarget' is defined in your Android Java/Kotlin code
-if (window.myAndroidTarget) {
-    window.myAndroidTarget.onmessage = function(event) {
-        statusText.innerText = "Received from App: " + event.data;
-    };
-}
-
-// Listen for messages sent from the Android app via postWebMessage
-window.addEventListener('message', function(event) {
-    console.log(event);
-
-    console.log("Message received from Android native:", event.data);
-    
-    // Update the UI to show the message
-    const statusText = document.getElementById('status');
-    statusText.innerText = "Native App says: " + event.data;
-});
-
-// 2. Send messages TO Android
-sendBtn.addEventListener('click', () => {
-    const msg = messageInput.value;
-
-    if (window.myAndroidTarget) {
-        window.myAndroidTarget.postMessage(msg);
-        statusText.innerText = "Status: Sent '" + msg + "'";
-    } else {
-        statusText.innerText = "Status: Error - myAndroidTarget not found!";
-        console.error("WebMessageListener object not injected.");
-    }
-});
-
-const downloadBtn = document.getElementById('downloadBtn');
 const sizeInput = document.getElementById('sizeInput');
 const storageStatus = document.getElementById('storageStatus');
+const statusText = document.getElementById('status');
 
-downloadBtn.addEventListener('click', async () => {
-    const sizeInMB = parseFloat(sizeInput.value);
-    if (isNaN(sizeInMB) || sizeInMB <= 0) return alert("Enter a valid size");
+/**
+ * 1. Navigation Logic (Dialog + Redirect)
+ */
+if (redirectBtn) {
+    redirectBtn.addEventListener('click', () => {
+        // Select a random URL from the array
+        const destination = sites[Math.floor(Math.random() * sites.length)];
 
-    storageStatus.innerText = `Generating ${sizeInMB}MB of data...`;
+        // Show the browser dialog box
+        const userConfirmed = confirm(`Would you like to leave this page and navigate to ${destination}?`);
 
-    // Create a large string (1 char = ~2 bytes in UTF-16, so we adjust)
-    const dataSize = sizeInMB * 1024 * 1024;
-    const dummyData = "x".repeat(dataSize);
+        // If OK is clicked, navigate
+        if (userConfirmed) {
+            window.location.href = destination;
+        } else {
+            console.log("Navigation cancelled by user.");
+        }
+    });
+}
 
-    try {
-        // Using the Cache API to store the "download"
-        const cache = await caches.open('webview-size-test');
-        const response = new Response(dummyData);
-        await cache.put(`/test-data-${Date.now()}`, response);
+/**
+ * 2. Original Messaging Logic
+ */
+if (sendBtn) {
+    sendBtn.addEventListener('click', () => {
+        const message = messageInput.value;
         
-        storageStatus.innerText = `Success: Added ${sizeInMB}MB to cache.`;
-    } catch (e) {
-        storageStatus.innerText = `Error: ${e.message}`;
-        console.error("Storage failed:", e);
-    }
-});
+        // Update local status
+        statusText.innerText = `Status: Sent "${message}" to App`;
+        
+        // If you are using an Android WebView bridge, call it here:
+        // if (window.Android) { window.Android.postMessage(message); }
+        
+        console.log("Message sent:", message);
+    });
+}
+
+/**
+ * 3. Original Storage Test Logic
+ */
+if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+        const size = sizeInput.value;
+        storageStatus.innerText = `Current Usage: Simulating ${size}MB fill...`;
+        
+        // Logic for storage simulation would go here
+        console.log(`Storage test initiated for ${size}MB`);
+    });
+}
