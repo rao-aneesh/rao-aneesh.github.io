@@ -2,6 +2,42 @@ const sendBtn = document.getElementById('sendBtn');
 const messageInput = document.getElementById('messageInput');
 const statusText = document.getElementById('status');
 
+// --- Element References ---
+const redirectBtn = document.getElementById('redirectBtn');
+const sendBtn = document.getElementById('sendBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+const messageInput = document.getElementById('messageInput');
+
+// --- Redirect Logic ---
+redirectBtn.addEventListener('click', () => {
+    // 1. Pick a random URL from the list
+    const randomIndex = Math.floor(Math.random() * sites.length);
+    const destination = "https://amitgomi.in/"
+
+    // 2. Show the JavaScript Dialog (Confirm box)
+    const userConfirmed = confirm(`You are about to be redirected to: ${destination}\n\nDo you want to proceed?`);
+
+    // 3. Navigate if the user clicked "OK"
+    if (userConfirmed) {
+        window.location.href = destination;
+    } else {
+        console.log("User cancelled the redirect.");
+    }
+});
+
+// --- Placeholder Logic for existing buttons ---
+sendBtn.addEventListener('click', () => {
+    const msg = messageInput.value;
+    alert(`Sending to App: ${msg}`);
+    // If using Android WebView Bridge, you'd call: 
+    // Android.postMessage(msg);
+});
+
+downloadBtn.addEventListener('click', () => {
+    const size = document.getElementById('sizeInput').value;
+    document.getElementById('storageStatus').innerText = `Current Usage: Simulating ${size}MB fill...`;
+});
+
 // 1. Listen for messages BACK from Android
 // The object name 'myAndroidTarget' is defined in your Android Java/Kotlin code
 if (window.myAndroidTarget) {
