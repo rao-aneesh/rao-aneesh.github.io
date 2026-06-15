@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Same Window Navigation Test</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .input-group {
+            margin: 20px 0;
+        }
+        input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+        .btn-html { background-color: #007aff; }
+        .btn-location { background-color: #ff9500; }
+        .btn-replace { background-color: #ff3b30; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="../../index.html">← Back to Hub</a>
+        <h1>Same Window Navigation Test</h1>
+    </header>
+
+    <main class="card">
+        <p>Test how the WebView handles navigating away from this page within the same frame.</p>
+        
+        <div class="input-group">
+            <label for="url-input"><strong>Enter URL:</strong></label>
+            <input type="url" id="url-input" value="https://www.wikipedia.org" placeholder="https://example.com">
+        </div>
+
+        <div class="input-group">
+            <a href="https://www.wikipedia.org" id="standard-link" class="btn btn-html">
+                Standard Link (&lt;a href="..."&gt;)
+            </a>
+        </div>
+
+        <div class="input-group">
+            <button id="location-btn" class="btn btn-location">Assign via window.location.href</button>
+        </div>
+
+        <div class="input-group">
+            <button id="replace-btn" class="btn btn-replace">Replace via window.location.replace()</button>
+        </div>
+    </main>
+
+    <script>
+        const urlInput = document.getElementById('url-input');
+        const standardLink = document.getElementById('standard-link');
+        const locationBtn = document.getElementById('location-btn');
+        const replaceBtn = document.getElementById('replace-btn');
+
+        // Helper to format URL
+        function getCleanUrl() {
+            let url = urlInput.value.trim();
+            return url;
+        }
+
+        // Sync input with standard HTML link
+        urlInput.addEventListener('input', () => {
+            standardLink.href = getCleanUrl();
+        });
+
+        // Handle window.location.href (Adds to session history)
+        locationBtn.addEventListener('click', () => {
+            window.location.href = getCleanUrl();
+        });
+
+        // Handle window.location.replace (Overwrites current history entry)
+        replaceBtn.addEventListener('click', () => {
+            window.location.replace(getCleanUrl());
+        });
+    </script>
+</body>
+</html>

@@ -68,9 +68,6 @@
         // Handle the JavaScript window.open method
         jsOpenBtn.addEventListener('click', () => {
             let url = urlInput.value.trim();
-            if (url && !/^https?:\/\//i.test(url)) {
-                url = 'https://' + url;
-            }
             
             // This triggers the window.open logic
             const newWindow = window.open(url, '_blank');
