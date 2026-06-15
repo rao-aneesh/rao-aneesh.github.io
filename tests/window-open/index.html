@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Window Test</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .input-group {
+            margin: 20px 0;
+        }
+        input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #34c759;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="../../index.html">← Back to Hub</a>
+        <h1>New Window (_blank) Test</h1>
+    </header>
+
+    <main class="card">
+        <p>Test how the WebView handles opening links in a new window/tab.</p>
+        
+        <div class="input-group">
+            <label for="url-input"><strong>Enter URL:</strong></label>
+            <input type="url" id="url-input" value="https://www.google.com" placeholder="https://example.com">
+        </div>
+
+        <div class="input-group">
+            <a href="https://www.google.com" target="_blank" id="dynamic-link" class="test-list a" style="background:#5856d6;">
+                Open via HTML Link (&lt;a target="_blank"&gt;)
+            </a>
+        </div>
+
+        <div class="input-group">
+            <button id="js-open-btn">Open via JS (window.open)</button>
+        </div>
+    </main>
+
+    <script>
+        const urlInput = document.getElementById('url-input');
+        const dynamicLink = document.getElementById('dynamic-link');
+        const jsOpenBtn = document.getElementById('js-open-btn');
+
+        // Sync the input URL with the HTML Anchor tag
+        urlInput.addEventListener('input', () => {
+            let url = urlInput.value.trim();
+            dynamicLink.href = url;
+        });
+
+        // Handle the JavaScript window.open method
+        jsOpenBtn.addEventListener('click', () => {
+            let url = urlInput.value.trim();
+            if (url && !/^https?:\/\//i.test(url)) {
+                url = 'https://' + url;
+            }
+            
+            // This triggers the window.open logic
+            const newWindow = window.open(url, '_blank');
+            
+            if (!newWindow) {
+                alert('Popup blocked or window.open failed. Check WebView settings.');
+            }
+        });
+    </script>
+</body>
+</html>

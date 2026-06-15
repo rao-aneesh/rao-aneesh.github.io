@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebView Test Suite</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header>
         <h1>WebView Environment Inspector</h1>
@@ -19,9 +21,7 @@
     <main>
         <h2>Available Tests</h2>
         <ul class="test-list">
-            <li><a href="tests/bridge-test/index.html">JS Bridge Connectivity</a></li>
-            <li><a href="tests/media-autoplay/index.html">Video/Audio Autoplay</a></li>
-            <!-- New tests go here -->
+            <li><a href="tests/window-open/index.html">New Window (_blank) Tester</a></li>
         </ul>
     </main>
 
@@ -32,4 +32,5 @@
         document.getElementById('cookies').textContent = navigator.cookieEnabled;
     </script>
 </body>
+
 </html>
