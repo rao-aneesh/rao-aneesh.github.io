@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialog Box Test</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child { border: none; }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-alert { background-color: #ff3b30; }
+        .btn-confirm { background-color: #ff9500; }
+        .btn-prompt { background-color: #007aff; }
+        .result-box {
+            background: #e5e5ea;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="../../index.html">← Back to Hub</a>
+        <h1>JS Dialog Box Tester</h1>
+    </header>
+
+    <main class="card">
+        <div class="section">
+            <h3>1. Alert Dialog</h3>
+            <p>Simple informational modal with an "OK" button.</p>
+            <input type="text" id="alert-text" value="This is a standard alert message.">
+            <button id="btn-alert" class="btn btn-alert">Trigger alert()</button>
+        </div>
+
+        <div class="section">
+            <h3>2. Confirm Dialog</h3>
+            <p>Asks the user for a binary choice (OK/Cancel). Returns <code>true</code> or <code>false</code>.</p>
+            <input type="text" id="confirm-text" value="Do you want to proceed with this test?">
+            <button id="btn-confirm" class="btn btn-confirm">Trigger confirm()</button>
+            <div class="result-box">Result: <span id="confirm-result">None</span></div>
+        </div>
+
+        <div class="section">
+            <h3>3. Prompt Dialog</h3>
+            <p>Asks the user for text input. Returns the text entered, or <code>null</code> if canceled.</p>
+            <input type="text" id="prompt-text" value="What is your favorite testing framework?">
+            <input type="text" id="prompt-default" value="Selenium" placeholder="Optional default value">
+            <button id="btn-prompt" class="btn btn-prompt">Trigger prompt()</button>
+            <div class="result-box">Result: <span id="prompt-result">None</span></div>
+        </div>
+    </main>
+
+    <script>
+        // Alert Logic
+        document.getElementById('btn-alert').addEventListener('click', () => {
+            const msg = document.getElementById('alert-text').value;
+            window.alert(msg);
+        });
+
+        // Confirm Logic
+        document.getElementById('btn-confirm').addEventListener('click', () => {
+            const msg = document.getElementById('confirm-text').value;
+            const result = window.confirm(msg);
+            document.getElementById('confirm-result').textContent = result ? "TRUE (User clicked OK)" : "FALSE (User clicked Cancel)";
+        });
+
+        // Prompt Logic
+        document.getElementById('btn-prompt').addEventListener('click', () => {
+            const msg = document.getElementById('prompt-text').value;
+            const defaultVal = document.getElementById('prompt-default').value;
+            const result = window.prompt(msg, defaultVal);
+            
+            if (result === null) {
+                document.getElementById('prompt-result').textContent = "NULL (User canceled)";
+            } else if (result === "") {
+                document.getElementById('prompt-result').textContent = '"" (User left it blank and hit OK)';
+            } else {
+                document.getElementById('prompt-result').textContent = `"${result}"`;
+            }
+        });
+    </script>
+</body>
+</html>
