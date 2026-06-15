@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         .input-group {
             margin: 20px 0;
         }
+
         input[type="url"] {
             width: 100%;
             padding: 10px;
@@ -17,6 +19,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         button {
             width: 100%;
             padding: 12px;
@@ -29,6 +32,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <a href="../../index.html">← Back to Hub</a>
@@ -37,14 +41,15 @@
 
     <main class="card">
         <p>Test how the WebView handles opening links in a new window/tab.</p>
-        
+
         <div class="input-group">
             <label for="url-input"><strong>Enter URL:</strong></label>
             <input type="url" id="url-input" value="https://www.google.com" placeholder="https://example.com">
         </div>
 
         <div class="input-group">
-            <a href="https://www.google.com" target="_blank" id="dynamic-link" class="test-list a" style="background:#0099ff; color: white;"></a>
+            <a href="https://www.google.com" target="_blank" id="dynamic-link" class="test-list a"
+                style="display: block; width: 100%; padding: 12px; background: #0099ff; color: white; text-decoration: none; border-radius: 5px; text-align: center; font-weight: bold; box-sizing: border-box;">
                 Open via HTML Link (&lt;a target="_blank"&gt;)
             </a>
         </div>
@@ -68,14 +73,15 @@
         // Handle the JavaScript window.open method
         jsOpenBtn.addEventListener('click', () => {
             let url = urlInput.value.trim();
-            
+
             // This triggers the window.open logic
             const newWindow = window.open(url, '_blank');
-            
+
             if (!newWindow) {
                 alert('Popup blocked or window.open failed. Check WebView settings.');
             }
         });
     </script>
 </body>
+
 </html>
