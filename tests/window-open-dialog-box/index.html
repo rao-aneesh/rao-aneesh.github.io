@@ -30,44 +30,23 @@
     <main class="card">
         <p>This test opens a <strong>new window</strong> (`_blank`) that immediately attempts to trigger a JavaScript dialog box once loaded. This tests if your WebView properly attaches dialog handlers to dynamically spawned windows.</p>
         
-        <a href="target.html" target="_blank" class="btn btn-html">
+        <a href="target.html?method=html" target="_blank" class="btn btn-html">
             Launch via HTML Link (&lt;a target="_blank"&gt;)
         </a>
 
         <button id="js-launch-btn" class="btn btn-js">
-            Launch via JS (window.open + alert)
+            Launch via JS (window.open with Explicit URL)
         </button>
     </main>
 
     <script>
         document.getElementById('js-launch-btn').addEventListener('click', () => {
-            // Open a blank window
-            const newWin = window.open('', '_blank');
+            // FIX: We now explicitly provide a target URL route instead of a blank string ''
+            const newWin = window.open('target.html?method=js', '_blank');
             
-            if (newWin) {
-                // Inject HTML and script directly into the newly created window context
-                newWin.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Injected Window</title>
-                        <style>body { font-family: sans-serif; padding: 20px; text-align: center; background: #f4f4f9; }</style>
-                    </head>
-                    <body>
-                        <h2>Window Spawned via JS</h2>
-                        <p>Triggering alert next...</p>
-                        <script>
-                            setTimeout(() => {
-                                alert("Success! This alert was fired from a window opened via JavaScript.");
-                            }, 500);
-                        <\/script>
-                    </body>
-                    </html>
-                `);
-                newWin.document.close();
-            } else {
-                alert('Popup blocked or window.open failed.');
+            if (!newWin) {
+                // If the WebView's handler entirely blocks window.open, this falls back safely
+                alert('Popup blocked or window.open tracking rejected by WebView configuration.');
             }
         });
     </script>
