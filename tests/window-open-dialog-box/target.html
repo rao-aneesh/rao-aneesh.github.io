@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target Window</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; background: #f4f4f9; }
+        .btn-close { padding: 10px 20px; background: #ff3b30; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Window Spawned via HTML Link</h2>
+    <p>An alert dialog should have popped up instantly.</p>
+    
+    <button class="btn-close" onclick="window.close()">Close Window</button>
+
+    <script>
+        // Trigger the dialog automatically when this child page mounts
+        alert("Success! This alert was fired from a new window opened via an HTML Link.");
+    </script>
+</body>
+</html>
