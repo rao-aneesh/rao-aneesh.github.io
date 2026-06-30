@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Window Dialog Test</title>
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .btn {
+            width: 100%;
+            padding: 12px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .btn-html { background-color: #5856d6; text-decoration: none; display: block; text-align: center; box-sizing: border-box;}
+        .btn-js { background-color: #af52de; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="../../index.html">← Back to Hub</a>
+        <h1>New Window Dialog Tester</h1>
+    </header>
+
+    <main class="card">
+        <p>This test opens a <strong>new window</strong> (`_blank`) that immediately attempts to trigger a JavaScript dialog box once loaded. This tests if your WebView properly attaches dialog handlers to dynamically spawned windows.</p>
+        
+        <a href="target.html" target="_blank" class="btn btn-html">
+            Launch via HTML Link (&lt;a target="_blank"&gt;)
+        </a>
+
+        <button id="js-launch-btn" class="btn btn-js">
+            Launch via JS (window.open + alert)
+        </button>
+    </main>
+
+    <script>
+        document.getElementById('js-launch-btn').addEventListener('click', () => {
+            // Open a blank window
+            const newWin = window.open('', '_blank');
+            
+            if (newWin) {
+                // Inject HTML and script directly into the newly created window context
+                newWin.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Injected Window</title>
+                        <style>body { font-family: sans-serif; padding: 20px; text-align: center; background: #f4f4f9; }</style>
+                    </head>
+                    <body>
+                        <h2>Window Spawned via JS</h2>
+                        <p>Triggering alert next...</p>
+                        <script>
+                            setTimeout(() => {
+                                alert("Success! This alert was fired from a window opened via JavaScript.");
+                            }, 500);
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                newWin.document.close();
+            } else {
+                alert('Popup blocked or window.open failed.');
+            }
+        });
+    </script>
+</body>
+</html>
